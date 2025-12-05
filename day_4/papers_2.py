@@ -11,7 +11,7 @@ def count_adjacent(grid):
             if grid[r][c] != "@":
                 continue
 
-            adj_count = 0
+            adj_count = 0 
 
             for dr, dc in directions:
                 nr, nc = r + dr, c + dc
@@ -22,12 +22,14 @@ def count_adjacent(grid):
 
             if adj_count < 4:
                 accessible += 1
+                papers_arrays[r][c] = "."
 
     return accessible
 
 
 papers = []
 papers_arrays = []
+result = 0
 
 with open("input.csv", 'r') as input:
     for row in input:
@@ -36,4 +38,10 @@ with open("input.csv", 'r') as input:
 for roll in papers:
     papers_arrays.append(list(roll))
 
-print(count_adjacent(papers_arrays))
+while True:
+    removed = count_adjacent(papers_arrays)
+    if removed == 0:
+        break
+    result += removed
+
+print(result)
