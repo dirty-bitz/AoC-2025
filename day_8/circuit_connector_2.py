@@ -32,16 +32,16 @@ coordinate_list = process_input("input.csv")
 distances = get_distances(coordinate_list)
 circuits = [{i} for i in range(len(coordinate_list))]
 
-n = 1000
-while n > 0 and distances:
-    n -= 1
+while distances:
     _, c1, c2 = distances.pop()
     i1, i2 = cfind(c1), cfind(c2)
     if i1 != i2:
         circuits[i1] = circuits[i1] | circuits[i2]
         del circuits[i2]
+    if len(circuits) == 1:
+        answer = coordinate_list[c1][0] * coordinate_list[c2][0]
+        break
 
 circuits.sort(key=lambda c: len(c), reverse=True)
-answer = len(circuits[0]) * len(circuits[1]) * len(circuits[2])
-
+answer
 print(answer)
